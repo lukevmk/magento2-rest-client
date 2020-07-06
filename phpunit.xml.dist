@@ -25,9 +25,4 @@
         <log type="coverage-text" target="build/coverage.txt"/>
         <log type="coverage-clover" target="build/logs/clover.xml"/>
     </logging>
-    <php>
-        <server name="BASE_URL"/>
-        <server name="ADMIN_USERNAME"/>
-        <server name="ADMIN_PASSWORD"/>
-    </php>
 </phpunit>
