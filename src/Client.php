@@ -85,7 +85,7 @@ class Client
 
     /**
      * @param string $email
-     * @return mixed
+     * @return array
      * @throws GuzzleException
      */
     public function searchCustomerByEmail(string $email): array
