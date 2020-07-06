@@ -36,3 +36,7 @@ jobs:
 
       - name: Execute tests
         run: vendor/bin/phpunit
+        env:
+          ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+          BASE_URL: ${{ secrets.BASE_URL }}
