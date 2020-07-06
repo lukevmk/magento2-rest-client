@@ -26,12 +26,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Ptchr\\Magento2 Ret Client\\": "src"
+            "Ptchr\\Magento2RestClient\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Ptchr\\Magento2 Ret Client\\Tests\\": "tests"
+            "Ptchr\\Magento2RestClient\\Tests\\": "tests"
         }
     },
     "scripts": {
