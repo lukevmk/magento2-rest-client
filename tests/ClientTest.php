@@ -54,7 +54,7 @@ class ClientTest extends TestCase
         $paymentMethods = $this->client->getPaymentMethods($quoteId);
         $this->assertIsArray($paymentMethods);
 
-       $order = $this->client->createOrder($quoteId, 'checkmo');
-       $this->assertNotNull($order);
+        $order = $this->client->createOrder($quoteId, 'checkmo');
+        $this->assertNotNull($order);
     }
 }

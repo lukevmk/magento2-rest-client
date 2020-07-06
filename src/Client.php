@@ -205,7 +205,7 @@ class Client
                         'shippingAddress' => $shippingAddress,
                         'billingAddress' => $billingAddress,
                         'shipping_method_code' => 'flatrate',
-                        'shipping_carrier_code' => 'flatrate'
+                        'shipping_carrier_code' => 'flatrate',
                     ],
                 ],
             ]
@@ -307,8 +307,8 @@ class Client
 
                 'json' => [
                     'paymentMethod' => [
-                        'method' => $paymentMethod
-                    ]
+                        'method' => $paymentMethod,
+                    ],
                 ],
             ]
         );
