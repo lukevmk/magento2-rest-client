@@ -2,8 +2,10 @@
     "name": "ptchr/magento2-rest-client",
     "description": "Magento 2 rest api client",
     "keywords": [
-        "ptchr",
-        "magento2-rest-client"
+        "magento2",
+        "rest",
+        "api",
+        "php"
     ],
     "homepage": "https://github.com/cmesptchr/magento2-rest-client",
     "license": "MIT",
