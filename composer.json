@@ -1,22 +1,23 @@
 {
-    "name": ":vendor_name/:package_name",
-    "description": ":package_description",
+    "name": "ptchr/magento2-rest-client",
+    "description": "Magento 2 rest api client",
     "keywords": [
-        ":vendor_name",
-        ":package_name"
+        "ptchr",
+        "magento2-rest-client"
     ],
-    "homepage": "https://github.com/spatie/:package_name",
+    "homepage": "https://github.com/cmesptchr/magento2-rest-client",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": ":author_email",
-            "homepage": "https://spatie.be",
+            "name": "Christiaan Mes",
+            "email": "christiaan@ptchr.nl",
+            "homepage": "https://ptchr.nl",
             "role": "Developer"
         }
     ],
     "require": {
-        "php": "^7.4"
+        "php": "^7.4",
+        "guzzlehttp/guzzle": "^7.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.16",
@@ -25,12 +26,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Spatie\\Skeleton\\": "src"
+            "Ptchr\\Magento2 Ret Client\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Spatie\\Skeleton\\Tests\\": "tests"
+            "Ptchr\\Magento2 Ret Client\\Tests\\": "tests"
         }
     },
     "scripts": {

@@ -1,10 +1,9 @@
-# :package_description
+# Magento 2 rest api client
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/:package_name.svg?style=flat-square)](https://packagist.org/packages/spatie/:package_name)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/spatie/:package_name/run-tests?label=tests)](https://github.com/spatie/:package_name/actions?query=workflow%3Arun-tests+branch%3Amaster)
-[![Total Downloads](https://img.shields.io/packagist/dt/spatie/:package_name.svg?style=flat-square)](https://packagist.org/packages/spatie/:package_name)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/cmesptchr/magento2-rest-client.svg?style=flat-square)](https://packagist.org/packages/cmesptchr/magento2-rest-client)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/cmesptchr/magento2-rest-client/run-tests?label=tests)](https://github.com/cmesptchr/magento2-rest-client/actions?query=workflow%3Arun-tests+branch%3Amaster)
+[![Total Downloads](https://img.shields.io/packagist/dt/cmesptchr/magento2-rest-client.svg?style=flat-square)](https://packagist.org/packages/cmesptchr/magento2-rest-client)
 
-**Note:** Replace ```:author_name``` ```:author_username``` ```:author_email``` ```:package_name``` ```:package_description``` with their correct values in [README.md](README.md), [CHANGELOG.md](CHANGELOG.md), [CONTRIBUTING.md](CONTRIBUTING.md), [LICENSE.md](LICENSE.md) and [composer.json](composer.json) files, then delete this line.
 
 This is where your description should go. Try and limit it to a paragraph or two. Consider adding a small example.
 
@@ -12,25 +11,24 @@ This is where your description should go. Try and limit it to a paragraph or two
 
 Learn how to create a package like this one, by watching our premium video course:
 
-[![Laravel Package training](https://spatie.be/github/package-training.jpg)](https://laravelpackage.training)
+[![Laravel Package training](https://cmesptchr.be/github/package-training.jpg)](https://laravelpackage.training)
 
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
+We invest a lot of resources into creating [best in class open source packages](https://cmesptchr.be/open-source). You can support us by [buying one of our paid products](https://cmesptchr.be/open-source/support-us).
 
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://cmesptchr.be/about-us). We publish all received postcards on [our virtual postcard wall](https://cmesptchr.be/open-source/postcards).
 
 ## Installation
 
 You can install the package via composer:
 
 ```bash
-composer require spatie/:package_name
+composer require cmesptchr/magento2-rest-client
 ```
 
 ## Usage
 
 ``` php
-$skeleton = new Spatie\Skeleton();
-echo $skeleton->echoPhrase('Hello, Spatie!');
+
 ```
 
 ## Testing
@@ -49,11 +47,11 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## Security
 
-If you discover any security related issues, please email freek@spatie.be instead of using the issue tracker.
+If you discover any security related issues, please email freek@cmesptchr.be instead of using the issue tracker.
 
 ## Credits
 
-- [:author_name](https://github.com/:author_username)
+- [Christiaan Mes](https://github.com/cmesptchr)
 - [All Contributors](../../contributors)
 
 ## License

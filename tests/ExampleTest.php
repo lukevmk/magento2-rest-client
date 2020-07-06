@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\Skeleton\Tests;
+namespace Ptchr\Magento2RestClient\Tests;
 
 use PHPUnit\Framework\TestCase;
 
