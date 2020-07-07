@@ -339,10 +339,10 @@ class Client
      * @param int $quoteId
      * @param string $paymentMethod
      * @param string|null $purchaseOrderNumber
-     * @return string OrderID
+     * @return int OrderID
      * @throws GuzzleException
      */
-    public function createOrder(int $quoteId, string $paymentMethod, string $purchaseOrderNumber = null): string
+    public function createOrder(int $quoteId, string $paymentMethod, string $purchaseOrderNumber = null): int
     {
         $data = [
             'paymentMethod' => [
@@ -354,12 +354,25 @@ class Client
             $data['paymentMethod']['po_number'] = $purchaseOrderNumber;
         }
 
-        return $this->request(
+        return (int) $this->request(
             'put',
             $this->baseUrl . $this->apiPrefix . 'carts/' . $quoteId . '/order',
             [
                 'json' => $data,
             ]
+        );
+    }
+
+    /**
+     * @param int $orderId
+     * @return mixed
+     * @throws GuzzleException
+     */
+    public function cancelOrder(int $orderId)
+    {
+        return $this->request(
+            'post',
+            $this->baseUrl . $this->apiPrefix . 'orders/' . $orderId . '/cancel',
         );
     }
 }

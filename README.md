@@ -60,7 +60,7 @@ $shippingMethod = $shippingMethods[0];
 $shippingInfo = $client->addShippingInformationToCart($customer, $quoteId, $shippingMethod['method_code'], $shippingMethod['carrier_code']);
 ```
 
-Search customer by email
+Get available payment methods for cart
 ------------------------
 ``` php
 $paymentMethods = $this->client->getAvailablePaymentMethodsForCart($quoteId);
@@ -81,13 +81,19 @@ $this->client->setPaymentInformation($quoteId, $paymentMethod, 'purchase_order_n
 Create order 
 ------------
 ``` php
-$order = $client->createOrder($quoteId, $paymentMethod);
+$orderId = $client->createOrder($quoteId, $paymentMethod);
 ```
 
 With purchase order number
 --------------------------
 ``` php
-$order = $client->createOrder($quoteId, $paymentMethod, '123');
+$orderId = $client->createOrder($quoteId, $paymentMethod, '123');
+```
+
+Cancel order 
+------------
+``` php
+$client->cancelOrder($orderId);
 ```
 
 Testing

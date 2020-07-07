@@ -66,7 +66,9 @@ class ClientTest extends TestCase
         $paymentMethod = $paymentMethods[0]['code'];
         $this->assertNotNull($this->client->setPaymentInformation($quoteId, $paymentMethod, 'test'));
 
-        $order = $this->client->createOrder($quoteId, $paymentMethod, 'test');
-        $this->assertNotNull($order);
+        $orderId = $this->client->createOrder($quoteId, $paymentMethod, 'test');
+        $this->assertIsInt($orderId);
+
+        $this->assertNotNull($this->client->cancelOrder($orderId));
     }
 }
