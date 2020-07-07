@@ -224,7 +224,7 @@ class Client
                 'shippingAddress' => $shippingAddress,
                 'billingAddress' => $billingAddress,
                 'shipping_method_code' => $methodCode,
-                'shipping_carrier_code' => $carrierCode
+                'shipping_carrier_code' => $carrierCode,
             ],
         ];
 
@@ -279,7 +279,7 @@ class Client
         return $this->request(
             'get',
             $this->baseUrl . $this->apiPrefix . 'carts/' . $quoteId . '/payment-methods',
-            );
+        );
     }
 
     /**
