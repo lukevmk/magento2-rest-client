@@ -6,6 +6,8 @@
 
 ## Installation
 
+##### Streamlines API calls through the Magento 2 REST API
+
 You can install the package via composer:
 
 ```bash
