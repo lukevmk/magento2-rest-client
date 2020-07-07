@@ -14,8 +14,66 @@ composer require cmesptchr/magento2-rest-client
 
 ## Usage
 
+####Intitialize client
 ``` php
+$client = new Ptchr\Magento2RestClient\Client('BASE_URL', 'ADMIN_USERNAME', 'ADMIN_PASSWORD');
+```
 
+####Search customer by email
+``` php
+$customer = $client->searchCustomerByEmail('john@example.com');
+```
+
+####Create cart instance
+``` php
+$quoteId = $client->createCart($customer['id']);
+```
+
+####Add product to cart
+``` php
+$cart = $client->addProductToCart($quoteId, 'SKU', 3);
+```
+
+####Estimate available shipping methods for cart
+``` php
+$shippingMethods = $client->estimateAvailableShippingMethodsForCart($customer, $quoteId);
+```
+
+####Add shipping information to cart
+``` php
+$shippingInfo = $client->addShippingInformationToCart($customer, $quoteId);
+```
+
+####Add shipping information with selected shipping method
+``` php
+$shippingMethods = $client->estimateAvailableShippingMethodsForCart($customer, $quoteId);
+$shippingMethod = $shippingMethods[0];
+$shippingInfo = $client->addShippingInformationToCart($customer, $quoteId, $shippingMethod['method_code'], $shippingMethod['carrier_code']);
+```
+
+####Search customer by email
+``` php
+$paymentMethods = $this->client->getAvailablePaymentMethodsForCart($quoteId);
+```
+
+####Set payment information
+``` php
+$this->client->setPaymentInformation($quoteId, $paymentMethod);
+```
+
+####Set payment information with purchase order number
+``` php
+$this->client->setPaymentInformation($quoteId, $paymentMethod, 'purchase_order_number');
+```
+
+####Create order 
+``` php
+$order = $client->createOrder($quoteId, $paymentMethod);
+```
+
+####With purchase order number
+``` php
+$order = $client->createOrder($quoteId, $paymentMethod, '123');
 ```
 
 ## Testing
