@@ -70,5 +70,11 @@ class ClientTest extends TestCase
         $this->assertIsInt($orderId);
 
         $this->assertNotNull($this->client->cancelOrder($orderId));
+
+        $order = $this->client->getOrder($orderId);
+        $this->assertIsArray($order);
+
+        $ordersByQuoteId = $this->client->searchOrdersQuoteId($quoteId);
+        $this->assertIsArray($ordersByQuoteId);
     }
 }

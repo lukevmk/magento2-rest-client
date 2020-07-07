@@ -123,7 +123,6 @@ class Client
      */
     public function searchCustomerByEmail(string $email): array
     {
-        $this->authenticate();
         $parameters = [
             'searchCriteria' => [
                 'pageSize' => 1,
@@ -279,7 +278,7 @@ class Client
         return $this->request(
             'get',
             $this->baseUrl . $this->apiPrefix . 'carts/' . $quoteId . '/payment-methods',
-        );
+            );
     }
 
     /**
@@ -354,7 +353,7 @@ class Client
             $data['paymentMethod']['po_number'] = $purchaseOrderNumber;
         }
 
-        return (int) $this->request(
+        return (int)$this->request(
             'put',
             $this->baseUrl . $this->apiPrefix . 'carts/' . $quoteId . '/order',
             [
@@ -373,6 +372,48 @@ class Client
         return $this->request(
             'post',
             $this->baseUrl . $this->apiPrefix . 'orders/' . $orderId . '/cancel',
-        );
+            );
+    }
+
+    /**
+     * @param int $orderId
+     * @return mixed
+     * @throws GuzzleException
+     */
+    public function getOrder(int $orderId)
+    {
+        return $this->request(
+            'get',
+            $this->baseUrl . $this->apiPrefix . 'orders/' . $orderId,
+            );
+    }
+
+    /**
+     * @param int $quoteId
+     * @return array
+     * @throws GuzzleException
+     */
+    public function searchOrdersQuoteId(int $quoteId): array
+    {
+        $parameters = [
+            'searchCriteria' => [
+                'pageSize' => 1,
+                'filterGroups' => [
+                    [
+                        'filters' => [
+                            [
+                                'field' => 'quote_id',
+                                'value' => $quoteId,
+                            ],
+                        ],
+                    ],
+                ],
+
+            ],
+        ];
+
+        return $this->request('get', $this->baseUrl . $this->apiPrefix . 'orders', [
+            'query' => $parameters,
+        ]);
     }
 }
