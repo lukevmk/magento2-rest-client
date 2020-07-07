@@ -278,7 +278,7 @@ class Client
         return $this->request(
             'get',
             $this->baseUrl . $this->apiPrefix . 'carts/' . $quoteId . '/payment-methods',
-            );
+        );
     }
 
     /**
@@ -372,7 +372,7 @@ class Client
         return $this->request(
             'post',
             $this->baseUrl . $this->apiPrefix . 'orders/' . $orderId . '/cancel',
-            );
+        );
     }
 
     /**
@@ -385,7 +385,7 @@ class Client
         return $this->request(
             'get',
             $this->baseUrl . $this->apiPrefix . 'orders/' . $orderId,
-            );
+        );
     }
 
     /**
