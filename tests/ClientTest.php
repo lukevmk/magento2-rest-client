@@ -5,6 +5,8 @@ namespace Ptchr\Magento2RestClient\Tests;
 use GuzzleHttp\Exception\GuzzleException;
 use PHPUnit\Framework\TestCase;
 use Ptchr\Magento2RestClient\Client;
+use Ptchr\Magento2RestClient\Exceptions\BillingAddressNotFoundException;
+use Ptchr\Magento2RestClient\Exceptions\ShippingAddressNotFoundException;
 
 class ClientTest extends TestCase
 {
@@ -36,8 +38,12 @@ class ClientTest extends TestCase
         $this->assertIsArray($customer);
     }
 
-    /** @test * */
-    public function creating_a_customer_cart_instance()
+    /** @test *
+     * @throws GuzzleException
+     * @throws BillingAddressNotFoundException
+     * @throws ShippingAddressNotFoundException
+     */
+    public function creating_a_customer_order()
     {
         $customer = $this->client->searchCustomerByEmail($_SERVER['CUSTOMER_EMAIL'])['items'][0];
         $customerId = $customer['id'];
