@@ -252,7 +252,7 @@ class Client
      * @return array
      * @throws GuzzleException
      */
-    public function getPaymentMethods(int $quoteId): array
+    public function getAvailablePaymentMethodsForCart(int $quoteId): array
     {
         $response = $this->guzzle->get(
             $this->baseUrl . $this->apiPrefix . 'carts/' . $quoteId . '/payment-methods',
@@ -292,11 +292,59 @@ class Client
     /**
      * @param int $quoteId
      * @param string $paymentMethod
+     * @param string|null $purchaseOrderNumber
      * @return string OrderID
      * @throws GuzzleException
      */
-    public function createOrder(int $quoteId, string $paymentMethod): string
+    public function setPaymentInformation(
+        int $quoteId,
+        string $paymentMethod,
+        string $purchaseOrderNumber = null
+    ): string {
+        $data = [
+            'method' => [
+                'method' => $paymentMethod,
+            ],
+        ];
+
+        if ($purchaseOrderNumber !== null) {
+            $data['method']['po_number'] = $purchaseOrderNumber;
+        }
+
+        $response = $this->guzzle->put(
+            $this->baseUrl . $this->apiPrefix . 'carts/' . $quoteId . '/selected-payment-method',
+            [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $this->accessToken,
+                    'Content-Type' => 'application/json',
+                ],
+
+                'json' => $data,
+            ]
+        );
+
+        return $this->formatResponseData($response);
+    }
+
+    /**
+     * @param int $quoteId
+     * @param string $paymentMethod
+     * @param string|null $purchaseOrderNumber
+     * @return string OrderID
+     * @throws GuzzleException
+     */
+    public function createOrder(int $quoteId, string $paymentMethod, string $purchaseOrderNumber = null): string
     {
+        $data = [
+            'paymentMethod' => [
+                'method' => $paymentMethod,
+            ],
+        ];
+
+        if ($purchaseOrderNumber !== null) {
+            $data['paymentMethod']['po_number'] = $purchaseOrderNumber;
+        }
+
         $response = $this->guzzle->put(
             $this->baseUrl . $this->apiPrefix . 'carts/' . $quoteId . '/order',
             [
@@ -305,11 +353,7 @@ class Client
                     'Content-Type' => 'application/json',
                 ],
 
-                'json' => [
-                    'paymentMethod' => [
-                        'method' => $paymentMethod,
-                    ],
-                ],
+                'json' => $data,
             ]
         );
 
