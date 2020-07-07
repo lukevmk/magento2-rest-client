@@ -4,8 +4,8 @@
 ![Tests](https://github.com/cmesptchr/magento2-rest-client/workflows/Tests/badge.svg)
 [![Total Downloads](https://img.shields.io/packagist/dt/ptchr/magento2-rest-client.svg?style=flat-square)](https://packagist.org/packages/cmesptchr/magento2-rest-client)
 
-## Installation
-
+Installation
+------------
 ##### Streamlines API calls through the Magento 2 REST API
 
 You can install the package via composer:
@@ -16,69 +16,82 @@ composer require cmesptchr/magento2-rest-client
 
 ## Usage
 
-#### Intitialize client
+Intitialize client
+------------------
 ``` php
 $client = new Ptchr\Magento2RestClient\Client('BASE_URL', 'ADMIN_USERNAME', 'ADMIN_PASSWORD');
 ```
 
-#### Search customer by email
+Search customer by email
+------------------------
 ``` php
 $customer = $client->searchCustomerByEmail('john@example.com');
 ```
 
-#### Create cart instance
+Create cart instance
+--------------------
 ``` php
 $quoteId = $client->createCart($customer['id']);
 ```
 
-#### Add product to cart
+Add product to cart
+-------------------
 ``` php
 $cart = $client->addProductToCart($quoteId, 'SKU', 3);
 ```
 
-#### Estimate available shipping methods for cart
+Estimate available shipping methods for cart
+--------------------------------------------
 ``` php
 $shippingMethods = $client->estimateAvailableShippingMethodsForCart($customer, $quoteId);
 ```
 
-#### Add shipping information to cart
+Add shipping information to cart
+--------------------------------
 ``` php
 $shippingInfo = $client->addShippingInformationToCart($customer, $quoteId);
 ```
 
-#### Add shipping information with selected shipping method
+Add shipping information with selected shipping method
+------------------------------------------------------
 ``` php
 $shippingMethods = $client->estimateAvailableShippingMethodsForCart($customer, $quoteId);
 $shippingMethod = $shippingMethods[0];
 $shippingInfo = $client->addShippingInformationToCart($customer, $quoteId, $shippingMethod['method_code'], $shippingMethod['carrier_code']);
 ```
 
-#### Search customer by email
+Search customer by email
+------------------------
 ``` php
 $paymentMethods = $this->client->getAvailablePaymentMethodsForCart($quoteId);
 ```
 
-#### Set payment information
+Set payment information
+------------------------
 ``` php
 $this->client->setPaymentInformation($quoteId, $paymentMethod);
 ```
 
-#### Set payment information with purchase order number
+Set payment information with purchase order number
+--------------------------------------------------
 ``` php
 $this->client->setPaymentInformation($quoteId, $paymentMethod, 'purchase_order_number');
 ```
 
-#### Create order 
+Create order 
+------------
 ``` php
 $order = $client->createOrder($quoteId, $paymentMethod);
 ```
 
-#### With purchase order number
+With purchase order number
+--------------------------
 ``` php
 $order = $client->createOrder($quoteId, $paymentMethod, '123');
 ```
 
-## Testing
+Testing
+-------
 
 ``` bash
 composer test
