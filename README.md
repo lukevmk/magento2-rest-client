@@ -1,8 +1,8 @@
 # Magento 2 rest api client
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/cmesptchr/magento2-rest-client.svg?style=flat-square)](https://packagist.org/packages/cmesptchr/magento2-rest-client)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/cmesptchr/magento2-rest-client/run-tests?label=tests)](https://github.com/cmesptchr/magento2-rest-client/actions?query=workflow%3Arun-tests+branch%3Amaster)
-[![Total Downloads](https://img.shields.io/packagist/dt/cmesptchr/magento2-rest-client.svg?style=flat-square)](https://packagist.org/packages/cmesptchr/magento2-rest-client)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/ptchr/magento2-rest-client.svg?style=flat-square)](https://packagist.org/packages/ptchr/magento2-rest-client)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/ptchr/magento2-rest-client/run-tests?label=tests)](https://github.com/cmesptchr/magento2-rest-client/actions?query=workflow%3Arun-tests+branch%3Amaster)
+[![Total Downloads](https://img.shields.io/packagist/dt/ptchr/magento2-rest-client.svg?style=flat-square)](https://packagist.org/packages/cmesptchr/magento2-rest-client)
 
 ## Installation
 

@@ -51,7 +51,7 @@ class ClientTest extends TestCase
         $quoteId = $this->client->createCart($customerId);
         $this->assertIsInt($quoteId);
 
-        $cart = $this->client->addProductToCart($quoteId, 'WS03-XS-Red', 3);
+        $cart = $this->client->addProductToCart($quoteId, $_SERVER['TEST_PRODUCT_SKU'], 3);
         $this->assertIsArray($cart);
 
         $shippingInfo = $this->client->addShippingInformationToCart($customer, $quoteId);
@@ -60,7 +60,7 @@ class ClientTest extends TestCase
         $paymentMethods = $this->client->getPaymentMethods($quoteId);
         $this->assertIsArray($paymentMethods);
 
-        $order = $this->client->createOrder($quoteId, 'checkmo');
+        $order = $this->client->createOrder($quoteId, $paymentMethods[0]['code']);
         $this->assertNotNull($order);
     }
 }
