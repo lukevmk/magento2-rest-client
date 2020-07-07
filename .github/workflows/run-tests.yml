@@ -40,3 +40,5 @@ jobs:
           ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
           ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
           BASE_URL: ${{ secrets.BASE_URL }}
+          CUSTOMER_EMAIL: ${{ secrets.CUSTOMER_EMAIL }}
+          TEST_PRODUCT_SKU: ${{ secrets.TEST_PRODUCT_SKU }}
