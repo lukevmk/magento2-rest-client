@@ -28,7 +28,7 @@ class Client
     /**
      * @var \GuzzleHttp\Client
      */
-    private $guzzle;
+    private \GuzzleHttp\Client $guzzle;
 
     /**
      * @var string
@@ -96,6 +96,27 @@ class Client
     }
 
     /**
+     * @param string $method
+     * @param string $url
+     * @param array $options
+     * @return mixed
+     * @throws GuzzleException
+     */
+    private function request(string $method, string $url, array $options = [])
+    {
+        $auth = [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $this->accessToken,
+                'Content-Type' => 'application/json',
+            ],
+        ];
+
+        $options = array_merge($auth, $options);
+
+        return $this->formatResponseData($this->guzzle->request($method, $url, $options));
+    }
+
+    /**
      * @param string $email
      * @return array
      * @throws GuzzleException
@@ -120,16 +141,9 @@ class Client
             ],
         ];
 
-        $response = $this->guzzle->get($this->baseUrl . $this->apiPrefix . 'customers/search', [
-            'headers' => [
-                'Authorization' => 'Bearer ' . $this->accessToken,
-                'Content-Type' => 'application/json',
-            ],
-
+        return $this->request('get', $this->baseUrl . $this->apiPrefix . 'customers/search', [
             'query' => $parameters,
         ]);
-
-        return $this->formatResponseData($response);
     }
 
     /**
@@ -141,14 +155,7 @@ class Client
      */
     public function createCart(int $customerId): int
     {
-        $response = $this->guzzle->post($this->baseUrl . $this->apiPrefix . 'customers/' . $customerId . '/carts', [
-            'headers' => [
-                'Authorization' => 'Bearer ' . $this->accessToken,
-                'Content-Type' => 'application/json',
-            ],
-        ]);
-
-        return $this->formatResponseData($response);
+        return $this->request('post', $this->baseUrl . $this->apiPrefix . 'customers/' . $customerId . '/carts');
     }
 
     /**
@@ -160,12 +167,7 @@ class Client
      */
     public function addProductToCart(int $quoteId, string $sku, int $quantity)
     {
-        $response = $this->guzzle->post($this->baseUrl . $this->apiPrefix . 'carts/mine/items', [
-            'headers' => [
-                'Authorization' => 'Bearer ' . $this->accessToken,
-                'Content-Type' => 'application/json',
-            ],
-
+        return $this->request('post', $this->baseUrl . $this->apiPrefix . 'carts/mine/items', [
             'json' => [
                 'cartItem' => [
                     'sku' => $sku,
@@ -174,45 +176,65 @@ class Client
                 ],
             ],
         ]);
+    }
 
-        return $this->formatResponseData($response);
+    /**
+     * @param int $quoteId
+     * @param array $customer
+     * @return mixed
+     * @throws GuzzleException
+     * @throws ShippingAddressNotFoundException
+     */
+    public function estimateAvailableShippingMethodsForCart(array $customer, int $quoteId)
+    {
+        $shippingAddress = $this->findShippingAddress($customer);
+
+        return $this->request(
+            'post',
+            $this->baseUrl . $this->apiPrefix . 'carts/' . $quoteId . '/estimate-shipping-methods',
+            [
+                'json' => [
+                    'address' => $shippingAddress,
+                ],
+            ]
+        );
     }
 
     /**
      * @param array $customer
      * @param int $quoteId
+     * @param string $methodCode
+     * @param string $carrierCode
      * @return mixed
      * @throws BillingAddressNotFoundException
      * @throws GuzzleException
      * @throws ShippingAddressNotFoundException
      */
-    public function addShippingInformationToCart(array $customer, int $quoteId)
-    {
+    public function addShippingInformationToCart(
+        array $customer,
+        int $quoteId,
+        string $methodCode = 'flatrate',
+        string $carrierCode = 'flatrate'
+    ) {
         $shippingAddress = $this->findShippingAddress($customer);
         $billingAddress = $this->findBillingAddress($customer);
 
+        $data = [
+            'addressInformation' => [
+                'shippingAddress' => $shippingAddress,
+                'billingAddress' => $billingAddress,
+                'shipping_method_code' => $methodCode,
+                'shipping_carrier_code' => $carrierCode
+            ],
+        ];
 
-        $response = $this->guzzle->post(
+        return $this->request(
+            'post',
             $this->baseUrl . $this->apiPrefix . 'carts/' . $quoteId . '/shipping-information',
             [
-                'headers' => [
-                    'Authorization' => 'Bearer ' . $this->accessToken,
-                    'Content-Type' => 'application/json',
-                ],
-
-                'json' => [
-                    'addressInformation' => [
-                        'shippingAddress' => $shippingAddress,
-                        'billingAddress' => $billingAddress,
-                        'shipping_method_code' => 'flatrate',
-                        'shipping_carrier_code' => 'flatrate',
-                    ],
-                ],
+                'json' => $data,
             ]
         );
-
-
-        return $this->formatResponseData($response);
     }
 
     /**
@@ -254,17 +276,10 @@ class Client
      */
     public function getAvailablePaymentMethodsForCart(int $quoteId): array
     {
-        $response = $this->guzzle->get(
+        return $this->request(
+            'get',
             $this->baseUrl . $this->apiPrefix . 'carts/' . $quoteId . '/payment-methods',
-            [
-                'headers' => [
-                    'Authorization' => 'Bearer ' . $this->accessToken,
-                    'Content-Type' => 'application/json',
-                ],
-            ]
-        );
-
-        return $this->formatResponseData($response);
+            );
     }
 
     /**
@@ -311,19 +326,13 @@ class Client
             $data['method']['po_number'] = $purchaseOrderNumber;
         }
 
-        $response = $this->guzzle->put(
+        return $this->request(
+            'put',
             $this->baseUrl . $this->apiPrefix . 'carts/' . $quoteId . '/selected-payment-method',
             [
-                'headers' => [
-                    'Authorization' => 'Bearer ' . $this->accessToken,
-                    'Content-Type' => 'application/json',
-                ],
-
                 'json' => $data,
             ]
         );
-
-        return $this->formatResponseData($response);
     }
 
     /**
@@ -345,18 +354,12 @@ class Client
             $data['paymentMethod']['po_number'] = $purchaseOrderNumber;
         }
 
-        $response = $this->guzzle->put(
+        return $this->request(
+            'put',
             $this->baseUrl . $this->apiPrefix . 'carts/' . $quoteId . '/order',
             [
-                'headers' => [
-                    'Authorization' => 'Bearer ' . $this->accessToken,
-                    'Content-Type' => 'application/json',
-                ],
-
                 'json' => $data,
             ]
         );
-
-        return $this->formatResponseData($response);
     }
 }
