@@ -337,12 +337,17 @@ class Client
     /**
      * @param int $quoteId
      * @param string $paymentMethod
+     * @param bool $isVirtual
      * @param string|null $purchaseOrderNumber
      * @return int OrderID
      * @throws GuzzleException
      */
-    public function createOrder(int $quoteId, string $paymentMethod, string $purchaseOrderNumber = null): int
-    {
+    public function createOrder(
+        int $quoteId,
+        string $paymentMethod,
+        bool $isVirtual = false,
+        string $purchaseOrderNumber = null
+    ): int {
         $data = [
             'paymentMethod' => [
                 'method' => $paymentMethod,
@@ -353,13 +358,32 @@ class Client
             $data['paymentMethod']['po_number'] = $purchaseOrderNumber;
         }
 
-        return (int)$this->request(
+        $orderId = (int)$this->request(
             'put',
             $this->baseUrl . $this->apiPrefix . 'carts/' . $quoteId . '/order',
             [
                 'json' => $data,
             ]
         );
+
+        if (! $isVirtual) {
+            return $orderId;
+        }
+
+        $this->request(
+            'post',
+            $this->baseUrl .$this->apiPrefix . 'orders',
+            [
+                'json' => [
+                    'entity' => [
+                        'entity_id' => $orderId,
+                        'is_virtual' => 1,
+                    ],
+                ],
+            ]
+        );
+
+        return $orderId;
     }
 
     /**
