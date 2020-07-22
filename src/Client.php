@@ -13,22 +13,22 @@ class Client
     /**
      * @var string
      */
-    private string $baseUrl;
+    private $baseUrl;
 
     /**
      * @var string
      */
-    private string $username;
+    private $username;
 
     /**
      * @var string
      */
-    private string $password;
+    private $password;
 
     /**
      * @var \GuzzleHttp\Client
      */
-    private \GuzzleHttp\Client $guzzle;
+    private $guzzle;
 
     /**
      * @var string
@@ -38,12 +38,12 @@ class Client
     /**
      * @var Carbon|null
      */
-    private ?Carbon $authenticatedAt = null;
+    private $authenticatedAt = null;
 
     /**
      * @var string
      */
-    private string $accessToken;
+    private $accessToken;
 
     /**
      * Client constructor.

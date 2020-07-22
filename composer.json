@@ -18,7 +18,6 @@
         }
     ],
     "require": {
-        "php": "^7.4",
         "guzzlehttp/guzzle": "^6",
         "nesbot/carbon": "^2.36",
         "ext-json": "*"

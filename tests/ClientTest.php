@@ -13,7 +13,7 @@ class ClientTest extends TestCase
     /**
      * @var Client
      */
-    private Client $client;
+    private $client;
 
     /**
      * @throws GuzzleException
