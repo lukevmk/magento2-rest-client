@@ -58,8 +58,12 @@ class ClientTest extends TestCase
         $shippingMethods = $this->client->estimateAvailableShippingMethodsForCart($customer, $quoteId);
         $shippingMethod = $shippingMethods[0];
 
-        $shippingInfo = $this->client->addShippingInformationToCart($customer, $quoteId, $shippingMethod['method_code'],
-            $shippingMethod['carrier_code']);
+        $shippingInfo = $this->client->addShippingInformationToCart(
+            $customer,
+            $quoteId,
+            $shippingMethod['method_code'],
+            $shippingMethod['carrier_code']
+        );
         $this->assertIsArray($shippingInfo);
 
         $paymentMethods = $this->client->getAvailablePaymentMethodsForCart($quoteId);

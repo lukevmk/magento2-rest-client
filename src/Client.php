@@ -404,15 +404,13 @@ class Client
 
     public function getOrder(int $orderId)
     {
-        try{
+        try {
             return $this->request(
                 'get',
                 $this->baseUrl . $this->apiPrefix . 'orders/' . $orderId,
-                );
-        }catch (ClientException $exception)
-        {
-            if($exception->getCode() === 404)
-            {
+            );
+        } catch (ClientException $exception) {
+            if ($exception->getCode() === 404) {
                 throw new OrderNotFoundException('Order with id: '. $orderId . ' not found!');
             }
 
