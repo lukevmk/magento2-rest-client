@@ -35,12 +35,12 @@ class Client
     /**
      * @var string
      */
-    private string $apiPrefix = '/rest/V1/';
+    private $apiPrefix = '/rest/V1/';
 
     /**
      * @var Carbon|null
      */
-    private $authenticatedAt = null;
+    private $authenticatedAt;
 
     /**
      * @var string
@@ -374,7 +374,7 @@ class Client
 
         $this->request(
             'post',
-            $this->baseUrl .$this->apiPrefix . 'orders',
+            $this->baseUrl . $this->apiPrefix . 'orders',
             [
                 'json' => [
                     'entity' => [
@@ -401,22 +401,30 @@ class Client
         );
     }
 
-
+    /**
+     * @param int $orderId
+     * @return mixed
+     * @throws GuzzleException
+     * @throws OrderNotFoundException
+     */
     public function getOrder(int $orderId)
     {
-        try{
+        try {
             return $this->request(
                 'get',
                 $this->baseUrl . $this->apiPrefix . 'orders/' . $orderId,
-                );
-        }catch (ClientException $exception)
-        {
-            if($exception->getCode() === 404)
-            {
-                throw new OrderNotFoundException('Order with id: '. $orderId . ' not found!');
+            );
+        } catch (ClientException $exception) {
+            if ($exception->getCode() === 404) {
+                throw new OrderNotFoundException('Order with id: ' . $orderId . ' not found!');
             }
 
-            throw new GuzzleException();
+            throw new ClientException(
+                $exception->getMessage(),
+                $exception->getRequest(),
+                $exception->getResponse(),
+                $exception
+            );
         }
     }
 
