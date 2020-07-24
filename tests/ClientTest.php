@@ -6,6 +6,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use PHPUnit\Framework\TestCase;
 use Ptchr\Magento2RestClient\Client;
 use Ptchr\Magento2RestClient\Exceptions\BillingAddressNotFoundException;
+use Ptchr\Magento2RestClient\Exceptions\OrderNotFoundException;
 use Ptchr\Magento2RestClient\Exceptions\ShippingAddressNotFoundException;
 
 class ClientTest extends TestCase
@@ -57,7 +58,8 @@ class ClientTest extends TestCase
         $shippingMethods = $this->client->estimateAvailableShippingMethodsForCart($customer, $quoteId);
         $shippingMethod = $shippingMethods[0];
 
-        $shippingInfo = $this->client->addShippingInformationToCart($customer, $quoteId, $shippingMethod['method_code'], $shippingMethod['carrier_code']);
+        $shippingInfo = $this->client->addShippingInformationToCart($customer, $quoteId, $shippingMethod['method_code'],
+            $shippingMethod['carrier_code']);
         $this->assertIsArray($shippingInfo);
 
         $paymentMethods = $this->client->getAvailablePaymentMethodsForCart($quoteId);
@@ -74,6 +76,9 @@ class ClientTest extends TestCase
 
         $order = $this->client->getOrder($orderId);
         $this->assertIsArray($order);
+
+        $this->expectException(OrderNotFoundException::class);
+        $this->client->getOrder(123123123);
 
         $ordersByQuoteId = $this->client->searchOrdersQuoteId($quoteId);
         $this->assertIsArray($ordersByQuoteId);

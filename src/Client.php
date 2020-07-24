@@ -3,9 +3,11 @@
 namespace Ptchr\Magento2RestClient;
 
 use Carbon\Carbon;
+use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\ResponseInterface;
 use Ptchr\Magento2RestClient\Exceptions\BillingAddressNotFoundException;
+use Ptchr\Magento2RestClient\Exceptions\OrderNotFoundException;
 use Ptchr\Magento2RestClient\Exceptions\ShippingAddressNotFoundException;
 
 class Client
@@ -399,17 +401,23 @@ class Client
         );
     }
 
-    /**
-     * @param int $orderId
-     * @return mixed
-     * @throws GuzzleException
-     */
+
     public function getOrder(int $orderId)
     {
-        return $this->request(
-            'get',
-            $this->baseUrl . $this->apiPrefix . 'orders/' . $orderId,
-        );
+        try{
+            return $this->request(
+                'get',
+                $this->baseUrl . $this->apiPrefix . 'orders/' . $orderId,
+                );
+        }catch (ClientException $exception)
+        {
+            if($exception->getCode() === 404)
+            {
+                throw new OrderNotFoundException('Order with id: '. $orderId . ' not found!');
+            }
+
+            throw new GuzzleException();
+        }
     }
 
     /**
