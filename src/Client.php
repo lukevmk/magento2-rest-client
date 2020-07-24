@@ -416,6 +416,7 @@ class Client
             );
         } catch (ClientException $exception) {
             if ($exception->getCode() === 404) {
+
                 throw new OrderNotFoundException('Order with id: ' . $orderId . ' not found!');
             }
 
