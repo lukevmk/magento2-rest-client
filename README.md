@@ -11,7 +11,7 @@ Installation
 You can install the package via composer:
 
 ```bash
-composer require cmesptchr/magento2-rest-client
+composer require ptchr/magento2-rest-client
 ```
 
 ## Usage
