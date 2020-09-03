@@ -76,6 +76,9 @@ class ClientTest extends TestCase
         $orderId = $this->client->createOrder($quoteId, $paymentMethod, true, 'test');
         $this->assertIsInt($orderId);
 
+        $invoice = $this->client->fullInvoiceOrder($orderId);
+        $this->assertIsInt($invoice);
+
         $this->assertNotNull($this->client->cancelOrder($orderId));
 
         $order = $this->client->getOrder($orderId);

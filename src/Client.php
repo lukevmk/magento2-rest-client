@@ -405,6 +405,19 @@ class Client
      * @param int $orderId
      * @return mixed
      * @throws GuzzleException
+     */
+    public function fullInvoiceOrder(int $orderId)
+    {
+        return $this->request(
+            'post',
+            $this->baseUrl . $this->apiPrefix . 'orders/' . $orderId . '/invoice',
+        );
+    }
+
+    /**
+     * @param int $orderId
+     * @return mixed
+     * @throws GuzzleException
      * @throws OrderNotFoundException
      */
     public function getOrder(int $orderId)
