@@ -368,7 +368,7 @@ class Client
             ]
         );
 
-        if (! $isVirtual) {
+        if (!$isVirtual) {
             return $orderId;
         }
 
@@ -403,14 +403,27 @@ class Client
 
     /**
      * @param int $orderId
+     * @param bool $paid
      * @return mixed
      * @throws GuzzleException
      */
-    public function fullInvoiceOrder(int $orderId)
+    public function fullInvoiceOrder(int $orderId, bool $paid = true)
     {
+        if ($paid) {
+            $data = [
+                'json' => [
+                    'capture' => true,
+                    'notify' => true,
+                ]
+            ];
+        } else {
+            $data = [];
+        }
+
         return $this->request(
             'post',
-            $this->baseUrl . $this->apiPrefix . 'orders/' . $orderId . '/invoice',
+            $this->baseUrl . $this->apiPrefix . 'order/' . $orderId . '/invoice',
+            $data
         );
     }
 
