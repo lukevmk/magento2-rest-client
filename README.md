@@ -90,6 +90,16 @@ With purchase order number
 $orderId = $client->createOrder($quoteId, $paymentMethod, '123');
 ```
 
+Create full invoice for order 
+------------
+``` php
+Paid:
+$client->fullInvoiceOrder($orderId, true);
+
+Not paid:
+$client->fullInvoiceOrder($orderId, false);
+```
+
 Cancel order 
 ------------
 ``` php
