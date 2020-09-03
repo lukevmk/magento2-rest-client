@@ -368,7 +368,7 @@ class Client
             ]
         );
 
-        if (!$isVirtual) {
+        if (! $isVirtual) {
             return $orderId;
         }
 
@@ -414,7 +414,7 @@ class Client
                 'json' => [
                     'capture' => true,
                     'notify' => true,
-                ]
+                ],
             ];
         } else {
             $data = [];
