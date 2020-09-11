@@ -368,7 +368,7 @@ class Client
             ]
         );
 
-        if (!$isVirtual) {
+        if (! $isVirtual) {
             return $orderId;
         }
 
@@ -474,7 +474,7 @@ class Client
         ];
 
         foreach ($filters as $filter) {
-            if (!isset($filter['field'], $filter['value'])) {
+            if (! isset($filter['field'], $filter['value'])) {
                 throw new \Exception('Filter must contain the field and value key + value');
             }
 
@@ -482,7 +482,7 @@ class Client
         }
 
         foreach ($sortBy as $sort) {
-            if (!isset($sort['direction'], $sort['field'])) {
+            if (! isset($sort['direction'], $sort['field'])) {
                 throw new \Exception('Filter must contain the direction and field key + value');
             }
 

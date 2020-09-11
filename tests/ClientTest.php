@@ -94,10 +94,10 @@ class ClientTest extends TestCase
     /** @test **/
     public function searching_orders()
     {
-        $currentPage  = 1;
-        $resultsPerPage  = 1;
+        $currentPage = 1;
+        $resultsPerPage = 1;
 
-        $orders = $this->client->getOrders($currentPage, $resultsPerPage );
+        $orders = $this->client->getOrders($currentPage, $resultsPerPage);
 
         $this->assertCount($resultsPerPage, $orders['items']);
         $this->assertEquals($resultsPerPage, $orders['search_criteria']['current_page']);
