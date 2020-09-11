@@ -28,6 +28,13 @@ Search customer by email
 $customer = $client->searchCustomerByEmail('john@example.com');
 ```
 
+Search orders 
+------------------------
+Magento docs: https://magento.redoc.ly/2.3.5-admin/#operation/salesOrderRepositoryV1GetListGet
+``` php
+$orders = $this->client->getOrders($currentPage, $resultsPerPage, $filters, $sort);
+```
+
 Create cart instance
 --------------------
 ``` php

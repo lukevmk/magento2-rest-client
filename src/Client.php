@@ -368,7 +368,7 @@ class Client
             ]
         );
 
-        if (! $isVirtual) {
+        if (!$isVirtual) {
             return $orderId;
         }
 
@@ -452,6 +452,46 @@ class Client
                 $exception
             );
         }
+    }
+
+    /**
+     * @param int $currentPage
+     * @param int $resultsPerPage
+     * @param array $filters
+     * @param array $sortBy
+     * @return mixed
+     * @throws GuzzleException
+     * @throws \Exception
+     */
+    public function getOrders(int $currentPage = 1, int $resultsPerPage = 12, array $filters = [], array $sortBy = [])
+    {
+        $parameters = [
+            'searchCriteria' => [
+                'currentPage' => $currentPage,
+                'pageSize' => $resultsPerPage,
+                'filterGroups' => [],
+            ],
+        ];
+
+        foreach ($filters as $filter) {
+            if (!isset($filter['field'], $filter['value'])) {
+                throw new \Exception('Filter must contain the field and value key + value');
+            }
+
+            $parameters['searchCriteria']['filterGroups']['filters'][] = $filter;
+        }
+
+        foreach ($sortBy as $sort) {
+            if (!isset($sort['direction'], $sort['field'])) {
+                throw new \Exception('Filter must contain the direction and field key + value');
+            }
+
+            $parameters['sortOrders'][] = $sort;
+        }
+
+        return $this->request('get', $this->baseUrl . $this->apiPrefix . 'orders', [
+            'query' => $parameters,
+        ]);
     }
 
     /**

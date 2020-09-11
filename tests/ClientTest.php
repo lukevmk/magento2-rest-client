@@ -90,4 +90,17 @@ class ClientTest extends TestCase
         $ordersByQuoteId = $this->client->searchOrdersQuoteId($quoteId);
         $this->assertIsArray($ordersByQuoteId);
     }
+
+    /** @test **/
+    public function searching_orders()
+    {
+        $currentPage  = 1;
+        $resultsPerPage  = 1;
+
+        $orders = $this->client->getOrders($currentPage, $resultsPerPage );
+
+        $this->assertCount($resultsPerPage, $orders['items']);
+        $this->assertEquals($resultsPerPage, $orders['search_criteria']['current_page']);
+        $this->assertEquals($resultsPerPage, $orders['search_criteria']['page_size']);
+    }
 }
