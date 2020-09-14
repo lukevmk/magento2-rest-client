@@ -491,7 +491,7 @@ class Client
                 throw new \Exception('Filter must contain the field and value key + value');
             }
 
-            $parameters['searchCriteria']['filterGroups']['filters'][] = $filter;
+            $parameters['searchCriteria']['filterGroups'][]['filters'][] = $filter;
         }
 
         foreach ($sortBy as $sort) {
