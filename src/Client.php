@@ -428,6 +428,19 @@ class Client
     }
 
     /**
+     * @param $orderId
+     * @return mixed
+     * @throws GuzzleException
+     */
+    public function shipOrder($orderId)
+    {
+        return $this->request(
+            'post',
+            $this->baseUrl . $this->apiPrefix . 'order/' . $orderId . '/ship'
+        );
+    }
+
+    /**
      * @param int $orderId
      * @return mixed
      * @throws GuzzleException

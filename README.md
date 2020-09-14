@@ -107,6 +107,12 @@ Not paid:
 $client->fullInvoiceOrder($orderId, false);
 ```
 
+Ship order
+--------------------------
+``` php
+$orderId = $client->shipOrder($orderId);
+```
+
 Cancel order 
 ------------
 ``` php

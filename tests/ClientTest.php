@@ -70,7 +70,7 @@ class ClientTest extends TestCase
 
         $this->assertIsArray($paymentMethods);
 
-        $paymentMethod = 'banktransfer';
+        $paymentMethod = 'checkmo';
         $this->assertNotNull($this->client->setPaymentInformation($quoteId, $paymentMethod, 'test'));
 
         $orderId = $this->client->createOrder($quoteId, $paymentMethod, true, 'test');
@@ -102,5 +102,45 @@ class ClientTest extends TestCase
         $this->assertCount($resultsPerPage, $orders['items']);
         $this->assertEquals($resultsPerPage, $orders['search_criteria']['current_page']);
         $this->assertEquals($resultsPerPage, $orders['search_criteria']['page_size']);
+    }
+
+    /** @test * */
+    public function order_with_shipment()
+    {
+        $customer = $this->client->searchCustomerByEmail($_SERVER['CUSTOMER_EMAIL'])['items'][0];
+        $customerId = $customer['id'];
+
+        $quoteId = $this->client->createCart($customerId);
+        $this->assertIsInt($quoteId);
+
+        $cart = $this->client->addProductToCart($quoteId, $_SERVER['TEST_PRODUCT_SKU'], 3);
+        $this->assertIsArray($cart);
+
+        $shippingMethods = $this->client->estimateAvailableShippingMethodsForCart($customer, $quoteId);
+        $shippingMethod = $shippingMethods[0];
+
+        $shippingInfo = $this->client->addShippingInformationToCart(
+            $customer,
+            $quoteId,
+            $shippingMethod['method_code'],
+            $shippingMethod['carrier_code']
+        );
+        $this->assertIsArray($shippingInfo);
+
+        $paymentMethods = $this->client->getAvailablePaymentMethodsForCart($quoteId);
+
+        $this->assertIsArray($paymentMethods);
+
+        $paymentMethod = 'checkmo';
+        $this->assertNotNull($this->client->setPaymentInformation($quoteId, $paymentMethod, 'test'));
+
+        $orderId = $this->client->createOrder($quoteId, $paymentMethod, false, 'test');
+        $this->assertIsInt($orderId);
+
+        $invoice = $this->client->fullInvoiceOrder($orderId, false);
+        $this->assertNotNull($invoice);
+
+        $ship = $this->client->shipOrder($orderId);
+        $this->assertNotNull($ship);
     }
 }
