@@ -70,7 +70,7 @@ class ClientTest extends TestCase
 
         $this->assertIsArray($paymentMethods);
 
-        $paymentMethod = 'checkmo';
+        $paymentMethod = 'banktransfer';
         $this->assertNotNull($this->client->setPaymentInformation($quoteId, $paymentMethod, 'test'));
 
         $orderId = $this->client->createOrder($quoteId, $paymentMethod, true, 'test');
@@ -131,7 +131,7 @@ class ClientTest extends TestCase
 
         $this->assertIsArray($paymentMethods);
 
-        $paymentMethod = 'checkmo';
+        $paymentMethod = 'banktransfer';
         $this->assertNotNull($this->client->setPaymentInformation($quoteId, $paymentMethod, 'test'));
 
         $orderId = $this->client->createOrder($quoteId, $paymentMethod, false, 'test');
