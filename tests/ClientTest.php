@@ -131,16 +131,16 @@ class ClientTest extends TestCase
 
         $this->assertIsArray($paymentMethods);
 
-        $paymentMethod = 'banktransfer';
+        $paymentMethod = 'checkmo';
         $this->assertNotNull($this->client->setPaymentInformation($quoteId, $paymentMethod, 'test'));
 
         $orderId = $this->client->createOrder($quoteId, $paymentMethod, false, 'test');
         $this->assertIsInt($orderId);
-
-        $invoice = $this->client->fullInvoiceOrder($orderId, false);
-        $this->assertNotNull($invoice);
-
-        $ship = $this->client->shipOrder($orderId);
-        $this->assertNotNull($ship);
+//
+//        $invoice = $this->client->fullInvoiceOrder($orderId, false);
+//        $this->assertNotNull($invoice);
+//
+//        $ship = $this->client->shipOrder($orderId);
+//        $this->assertNotNull($ship);
     }
 }
