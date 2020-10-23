@@ -499,7 +499,7 @@ class Client
                 throw new \Exception('Filter must contain the direction and field key + value');
             }
 
-            $parameters['sortOrders'][] = $sort;
+            $parameters['searchCriteria']['sortOrders'][] = $sort;
         }
 
         return $this->request('get', $this->baseUrl . $this->apiPrefix . 'orders', [
