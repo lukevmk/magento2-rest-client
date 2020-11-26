@@ -293,6 +293,7 @@ class Client
         return [
             'firstname' => $address['firstname'],
             'lastname' => $address['lastname'],
+            'company' => $address['company'],
             'postcode' => $address['postcode'],
             'email' => $customer['email'],
             'street' => $address['street'],
