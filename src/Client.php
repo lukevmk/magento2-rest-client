@@ -536,4 +536,28 @@ class Client
             'query' => $parameters,
         ]);
     }
+
+    public function getProductBySku(string $sku)
+    {
+        $parameters = [
+            'searchCriteria' => [
+                'pageSize' => 1,
+                'filterGroups' => [
+                    [
+                        'filters' => [
+                            [
+                                'field' => 'sku',
+                                'value' => $sku,
+                            ],
+                        ],
+                    ],
+                ],
+
+            ],
+        ];
+
+        return $this->request('get', $this->baseUrl . $this->apiPrefix . 'products', [
+            'query' => $parameters,
+        ]);
+    }
 }

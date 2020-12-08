@@ -70,7 +70,7 @@ class ClientTest extends TestCase
 
         $this->assertIsArray($paymentMethods);
 
-        $paymentMethod = 'banktransfer';
+        $paymentMethod = 'checkmo';
         $this->assertNotNull($this->client->setPaymentInformation($quoteId, $paymentMethod, 'test'));
 
         $orderId = $this->client->createOrder($quoteId, $paymentMethod, true, 'test');
@@ -142,5 +142,12 @@ class ClientTest extends TestCase
 //
 //        $ship = $this->client->shipOrder($orderId);
 //        $this->assertNotNull($ship);
+    }
+
+    /** @test * */
+    public function getting_product_by_sku()
+    {
+        $product = $this->client->getProductBySku($_SERVER['TEST_PRODUCT_SKU']);
+        $this->assertNotEmpty($product['items'][0]);
     }
 }
