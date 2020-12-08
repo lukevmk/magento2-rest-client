@@ -119,6 +119,20 @@ class Client
     }
 
     /**
+     * @param array $customer
+     * @return array
+     * @throws GuzzleException
+     */
+    public function createCustomer(array $customer): array
+    {
+        return $this->request('post', $this->baseUrl . $this->apiPrefix . 'customers', [
+            'json' => [
+                'customer' => $customer
+            ]
+        ]);
+    }
+
+    /**
      * @param string $email
      * @return array
      * @throws GuzzleException
