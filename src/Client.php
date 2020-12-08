@@ -127,8 +127,8 @@ class Client
     {
         return $this->request('post', $this->baseUrl . $this->apiPrefix . 'customers', [
             'json' => [
-                'customer' => $customer
-            ]
+                'customer' => $customer,
+            ],
         ]);
     }
 
