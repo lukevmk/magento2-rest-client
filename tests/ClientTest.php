@@ -46,49 +46,7 @@ class ClientTest extends TestCase
      */
     public function creating_a_customer_order()
     {
-        $customer = $this->client->searchCustomerByEmail($_SERVER['CUSTOMER_EMAIL'])['items'][0];
-        $customerId = $customer['id'];
-
-        $quoteId = $this->client->createCart($customerId);
-        $this->assertIsInt($quoteId);
-
-        $cart = $this->client->addProductToCart($quoteId, $_SERVER['TEST_PRODUCT_SKU'], 3);
-        $this->assertIsArray($cart);
-
-        $shippingMethods = $this->client->estimateAvailableShippingMethodsForCart($customer, $quoteId);
-        $shippingMethod = $shippingMethods[0];
-
-        $shippingInfo = $this->client->addShippingInformationToCart(
-            $customer,
-            $quoteId,
-            $shippingMethod['method_code'],
-            $shippingMethod['carrier_code']
-        );
-        $this->assertIsArray($shippingInfo);
-
-        $paymentMethods = $this->client->getAvailablePaymentMethodsForCart($quoteId);
-
-        $this->assertIsArray($paymentMethods);
-
-        $paymentMethod = 'checkmo';
-        $this->assertNotNull($this->client->setPaymentInformation($quoteId, $paymentMethod, 'test'));
-
-        $orderId = $this->client->createOrder($quoteId, $paymentMethod, true, 'test');
-        $this->assertIsInt($orderId);
-
-        $invoice = $this->client->fullInvoiceOrder($orderId);
-        $this->assertNotNull($invoice);
-
-        $this->assertNotNull($this->client->cancelOrder($orderId));
-
-        $order = $this->client->getOrder($orderId);
-        $this->assertIsArray($order);
-
-        $this->expectException(OrderNotFoundException::class);
-        $this->client->getOrder(123123123);
-
-        $ordersByQuoteId = $this->client->searchOrdersQuoteId($quoteId);
-        $this->assertIsArray($ordersByQuoteId);
+        $this->createOrder();
     }
 
     /** @test **/
@@ -149,5 +107,63 @@ class ClientTest extends TestCase
     {
         $product = $this->client->getProductBySku($_SERVER['TEST_PRODUCT_SKU']);
         $this->assertNotEmpty($product['items'][0]);
+    }
+
+    /** @test * */
+    public function placing_order_comment()
+    {
+        $orderId = $this->createOrder();
+        $comment = $this->client->addOrderComment($orderId, 'test comment');
+        $this->assertTrue($comment);
+    }
+
+    private function createOrder()
+    {
+        $customer = $this->client->searchCustomerByEmail($_SERVER['CUSTOMER_EMAIL'])['items'][0];
+        $customerId = $customer['id'];
+
+        $quoteId = $this->client->createCart($customerId);
+        $this->assertIsInt($quoteId);
+
+        $cart = $this->client->addProductToCart($quoteId, $_SERVER['TEST_PRODUCT_SKU'], 3);
+        $this->assertIsArray($cart);
+
+        $shippingMethods = $this->client->estimateAvailableShippingMethodsForCart($customer, $quoteId);
+        $shippingMethod = $shippingMethods[0];
+
+        $shippingInfo = $this->client->addShippingInformationToCart(
+            $customer,
+            $quoteId,
+            $shippingMethod['method_code'],
+            $shippingMethod['carrier_code']
+        );
+
+        $this->assertIsArray($shippingInfo);
+
+        $paymentMethods = $this->client->getAvailablePaymentMethodsForCart($quoteId);
+
+        $this->assertIsArray($paymentMethods);
+
+        $paymentMethod = 'purchaseorder';
+        $this->assertNotNull($this->client->setPaymentInformation($quoteId, $paymentMethod, 'test'));
+
+        $orderId = $this->client->createOrder($quoteId, $paymentMethod, true, 'test');
+        $this->assertIsInt($orderId);
+
+        $invoice = $this->client->fullInvoiceOrder($orderId);
+        $this->assertNotNull($invoice);
+
+        $this->assertNotNull($this->client->cancelOrder($orderId));
+
+        $order = $this->client->getOrder($orderId);
+        $this->assertIsArray($order);
+
+        $this->expectException(OrderNotFoundException::class);
+        $this->client->getOrder(123123123);
+
+        $ordersByQuoteId = $this->client->searchOrdersQuoteId($quoteId);
+        $this->assertIsArray($ordersByQuoteId);
+
+        return $orderId;
     }
 }

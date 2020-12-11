@@ -551,6 +551,11 @@ class Client
         ]);
     }
 
+    /**
+     * @param string $sku
+     * @return mixed
+     * @throws GuzzleException
+     */
     public function getProductBySku(string $sku)
     {
         $parameters = [
@@ -572,6 +577,32 @@ class Client
 
         return $this->request('get', $this->baseUrl . $this->apiPrefix . 'products', [
             'query' => $parameters,
+        ]);
+    }
+
+    /**
+     * @param int $orderId
+     * @param string $comment
+     * @param bool $notifyCustomer
+     * @param bool $visibleOnStoreFront
+     * @return mixed
+     * @throws GuzzleException
+     */
+    public function addOrderComment(
+        int $orderId,
+        string $comment,
+        bool $notifyCustomer = false,
+        bool $visibleOnStoreFront = false
+    ) {
+        return $this->request('post', $this->baseUrl . $this->apiPrefix . 'orders/' . $orderId . '/comments', [
+            'json' => [
+                'statusHistory' => [
+                    'comment' => $comment,
+                    'is_customer_notified' => (int)$notifyCustomer,
+                    'is_visible_on_front' => (int)$visibleOnStoreFront,
+                    'parent_id' => 0,
+                ],
+            ],
         ]);
     }
 }
