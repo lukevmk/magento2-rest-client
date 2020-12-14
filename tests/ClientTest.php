@@ -166,4 +166,13 @@ class ClientTest extends TestCase
 
         return $orderId;
     }
+
+    /** @test **/
+    public function retrieving_all_products()
+    {
+        $response = $this->client->getAllProducts(500);
+        $this->assertIsArray($response);
+        $this->assertNotEmpty($response['items']);
+        $this->assertNotEmpty($response['total_count']);
+    }
 }

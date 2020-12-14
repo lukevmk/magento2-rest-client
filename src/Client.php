@@ -552,6 +552,24 @@ class Client
     }
 
     /**
+     * @param int $pageSize
+     * @return mixed
+     * @throws GuzzleException
+     */
+    public function getAllProducts(int $pageSize)
+    {
+        $parameters = [
+            'query' => [
+                'searchCriteria' => [
+                    'pageSize' => $pageSize,
+                ]
+            ],
+        ];
+
+        return $this->request('get', $this->baseUrl  . $this->apiPrefix  . 'products', $parameters);
+    }
+
+    /**
      * @param string $sku
      * @return mixed
      * @throws GuzzleException
