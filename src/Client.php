@@ -562,7 +562,7 @@ class Client
             'query' => [
                 'searchCriteria' => [
                     'pageSize' => $pageSize,
-                ]
+                ],
             ],
         ];
 
