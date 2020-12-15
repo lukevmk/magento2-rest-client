@@ -681,16 +681,16 @@ class Client
     /**
      * Removes a product image from all store views
      *
-     * @param int $productId
+     * @param string $sku
      * @param int $mediaId
      * @return mixed
      * @throws GuzzleException
      */
-    public function removeProductImage(int $productId, int $mediaId)
+    public function removeProductImage(string $sku, int $mediaId)
     {
         return $this->request(
             'delete',
-            $this->baseUrl . $this->allApiPrefix . 'products/' . $productId . '/media/' . $mediaId
+            $this->baseUrl . $this->allApiPrefix . 'products/' . $sku . '/media/' . $mediaId
         );
     }
 }

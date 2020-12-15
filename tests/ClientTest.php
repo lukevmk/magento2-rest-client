@@ -181,10 +181,10 @@ class ClientTest extends TestCase
     {
         $contents = 'iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAWtJREFUeNpi/P//P8NgBkwMgxyMOnDUgTDAyMhIDNYF4vNA/B+IDwCxHLoakgEoFxODiQRXQUYi4e3k2gfDjMRajsP3zED8F8pmA+JvUDEYeArEMugOpFcanA/Ef6A0CPwC4uNoag5SnAjJjGI2tKhkg4rLAfFGIH4IxEuBWIjSKKYkDfZCHddLiwChVhokK8YGohwEZYy3aBmEKmDEhOCgreomo+VmZHxsMEQxIc2MAx3FO/DI3RxMmQTZkI9ALDCaSUYdOOrAIeRAPzQ+PxCHUM2FFDb5paGNBPRa5C20bUhxc4sSB4JaLnvxVHWHsbVu6OnACjyOg+HqgXKgGRD/JMKBoD6LDb0dyAPE94hwHAw/hGYcujlwEQmOg+EV9HJgLBmOg+FMWjsQVKR8psCBoDSrQqoDSSmoG6Hpj1wA6ju30LI9+BBX4UsC+Ai0T4BWVd1EIL5PgeO+APECmoXgaGtm1IE0AgABBgAJAICuV8dAUAAAAABJRU5ErkJggg==';
 
-        $productId = $_SERVER['TEST_PRODUCT_ID'];
+        $sku = $_SERVER['TEST_PRODUCT_SKU'];
 
         $newProductImageId = $this->client->createProductImage(
-            $productId,
+            $sku,
             1,
             true,
             'test-storing-image.png',
@@ -194,7 +194,7 @@ class ClientTest extends TestCase
 
         $this->assertNotNull($newProductImageId);
 
-        $removeProductImage = $this->client->removeProductImage($productId, $newProductImageId);
+        $removeProductImage = $this->client->removeProductImage($sku, $newProductImageId);
         $this->assertTrue($removeProductImage);
     }
 }
