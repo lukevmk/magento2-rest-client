@@ -57,7 +57,6 @@ class Client
      * @param string $baseUrl
      * @param string $username
      * @param string $password
-     * @throws GuzzleException
      */
     public function __construct(string $baseUrl, string $username, string $password)
     {
@@ -68,9 +67,6 @@ class Client
         $this->authenticate();
     }
 
-    /**
-     * @throws GuzzleException
-     */
     private function authenticate(): void
     {
         $isAuthenticated = $this->authenticatedAt instanceof Carbon && Carbon::now()->gt($this->authenticatedAt->addHours(4));
@@ -96,6 +92,7 @@ class Client
     /**
      * @param ResponseInterface $response
      * @return mixed
+     * @throws \JsonException
      */
     private function formatResponseData(ResponseInterface $response)
     {
@@ -108,6 +105,7 @@ class Client
      * @param array $options
      * @return mixed
      * @throws GuzzleException
+     * @throws \JsonException
      */
     private function request(string $method, string $url, array $options = [])
     {
@@ -127,6 +125,7 @@ class Client
      * @param array $customer
      * @return array
      * @throws GuzzleException
+     * @throws \JsonException
      */
     public function createCustomer(array $customer): array
     {
@@ -141,6 +140,7 @@ class Client
      * @param string $email
      * @return array
      * @throws GuzzleException
+     * @throws \JsonException
      */
     public function searchCustomerByEmail(string $email): array
     {
@@ -172,6 +172,7 @@ class Client
      * @param int $customerId
      * @return int
      * @throws GuzzleException
+     * @throws \JsonException
      */
     public function createCart(int $customerId): int
     {
@@ -184,6 +185,7 @@ class Client
      * @param int $quantity
      * @return mixed
      * @throws GuzzleException
+     * @throws \JsonException
      */
     public function addProductToCart(int $quoteId, string $sku, int $quantity)
     {
@@ -199,11 +201,12 @@ class Client
     }
 
     /**
-     * @param int $quoteId
      * @param array $customer
+     * @param int $quoteId
      * @return mixed
      * @throws GuzzleException
      * @throws ShippingAddressNotFoundException
+     * @throws \JsonException
      */
     public function estimateAvailableShippingMethodsForCart(array $customer, int $quoteId)
     {
@@ -229,6 +232,7 @@ class Client
      * @throws BillingAddressNotFoundException
      * @throws GuzzleException
      * @throws ShippingAddressNotFoundException
+     * @throws \JsonException
      */
     public function addShippingInformationToCart(
         array $customer,
@@ -293,6 +297,7 @@ class Client
      * @param int $quoteId
      * @return array
      * @throws GuzzleException
+     * @throws \JsonException
      */
     public function getAvailablePaymentMethodsForCart(int $quoteId): array
     {
@@ -307,7 +312,7 @@ class Client
      * @param array $address
      * @return array
      */
-    private function mapAddressFields(array $customer, array $address)
+    private function mapAddressFields(array $customer, array $address): array
     {
         return [
             'firstname' => $address['firstname'],
@@ -331,6 +336,7 @@ class Client
      * @param string|null $purchaseOrderNumber
      * @return string OrderID
      * @throws GuzzleException
+     * @throws \JsonException
      */
     public function setPaymentInformation(
         int $quoteId,
@@ -363,6 +369,7 @@ class Client
      * @param string|null $purchaseOrderNumber
      * @return int OrderID
      * @throws GuzzleException
+     * @throws \JsonException
      */
     public function createOrder(
         int $quoteId,
@@ -412,6 +419,7 @@ class Client
      * @param int $orderId
      * @return mixed
      * @throws GuzzleException
+     * @throws \JsonException
      */
     public function cancelOrder(int $orderId)
     {
@@ -426,6 +434,7 @@ class Client
      * @param bool $paid
      * @return mixed
      * @throws GuzzleException
+     * @throws \JsonException
      */
     public function fullInvoiceOrder(int $orderId, bool $paid = true)
     {
@@ -451,6 +460,7 @@ class Client
      * @param $orderId
      * @return mixed
      * @throws GuzzleException
+     * @throws \JsonException
      */
     public function shipOrder($orderId)
     {
@@ -465,6 +475,7 @@ class Client
      * @return mixed
      * @throws GuzzleException
      * @throws OrderNotFoundException
+     * @throws \JsonException
      */
     public function getOrder(int $orderId)
     {
@@ -531,6 +542,7 @@ class Client
      * @param int $quoteId
      * @return array
      * @throws GuzzleException
+     * @throws \JsonException
      */
     public function searchOrdersQuoteId(int $quoteId): array
     {
@@ -561,6 +573,7 @@ class Client
      * @param int $currentPage
      * @return mixed
      * @throws GuzzleException
+     * @throws \JsonException
      */
     public function getAllProducts(int $pageSize, int $currentPage = 1)
     {
@@ -580,6 +593,7 @@ class Client
      * @param string $sku
      * @return mixed
      * @throws GuzzleException
+     * @throws \JsonException
      */
     public function getProductBySku(string $sku)
     {
@@ -612,6 +626,7 @@ class Client
      * @param bool $visibleOnStoreFront
      * @return mixed
      * @throws GuzzleException
+     * @throws \JsonException
      */
     public function addOrderComment(
         int $orderId,
@@ -643,6 +658,7 @@ class Client
      * @param array $types
      * @return mixed
      * @throws GuzzleException
+     * @throws \JsonException
      */
     public function createProductImage(
         string $sku,
@@ -685,6 +701,7 @@ class Client
      * @param int $mediaId
      * @return mixed
      * @throws GuzzleException
+     * @throws \JsonException
      */
     public function removeProductImage(string $sku, int $mediaId)
     {
