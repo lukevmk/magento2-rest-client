@@ -558,15 +558,17 @@ class Client
 
     /**
      * @param int $pageSize
+     * @param int $currentPage
      * @return mixed
      * @throws GuzzleException
      */
-    public function getAllProducts(int $pageSize)
+    public function getAllProducts(int $pageSize, int $currentPage = 1)
     {
         $parameters = [
             'query' => [
                 'searchCriteria' => [
                     'pageSize' => $pageSize,
+                    'currentPage' => $currentPage,
                 ],
             ],
         ];
