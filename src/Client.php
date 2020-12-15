@@ -38,6 +38,11 @@ class Client
     private $apiPrefix = '/rest/V1/';
 
     /**
+     * @var string
+     */
+    private $allApiPrefix = '/rest/all/V1/';
+
+    /**
      * @var Carbon|null
      */
     private $authenticatedAt;
@@ -566,7 +571,7 @@ class Client
             ],
         ];
 
-        return $this->request('get', $this->baseUrl  . $this->apiPrefix  . 'products', $parameters);
+        return $this->request('get', $this->baseUrl . $this->apiPrefix . 'products', $parameters);
     }
 
     /**
@@ -622,5 +627,68 @@ class Client
                 ],
             ],
         ]);
+    }
+
+    /**
+     * Stores a product image from all store views
+     *
+     * @param int $productId
+     * @param int $position
+     * @param bool $disabled
+     * @param string $fileName
+     * @param string $mimeType
+     * @param string $contents
+     * @param array $types
+     * @return mixed
+     * @throws GuzzleException
+     */
+    public function createProductImage(
+        int $productId,
+        int $position,
+        bool $disabled,
+        string $fileName,
+        string $mimeType,
+        string $contents,
+        array $types = []
+    ) {
+        $parameters = [
+            'json' => [
+                'entry' => [
+                    'media_type' => 'image',
+                    'label' => 'Image',
+                    'position' => $position,
+                    'disabled' => $disabled,
+                    'file' => $fileName,
+                    'types' => $types,
+                    'content' => [
+                        'base64EncodedData' => $contents,
+                        'type' => $mimeType,
+                        'name' => $fileName,
+                    ],
+                ],
+            ],
+        ];
+
+        return $this->request(
+            'post',
+            $this->baseUrl . $this->allApiPrefix . 'products/' . $productId . '/media',
+            $parameters
+        );
+    }
+
+    /**
+     * Removes a product image from all store views
+     *
+     * @param int $productId
+     * @param int $mediaId
+     * @return mixed
+     * @throws GuzzleException
+     */
+    public function removeProductImage(int $productId, int $mediaId)
+    {
+        return $this->request(
+            'delete',
+            $this->baseUrl . $this->allApiPrefix . 'products/' . $productId . '/media/' . $mediaId
+        );
     }
 }
