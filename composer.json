@@ -19,7 +19,7 @@
     ],
     "require": {
         "php": "^7.2",
-        "guzzlehttp/guzzle": "^6",
+        "guzzlehttp/guzzle": "^6|^7",
         "nesbot/carbon": "^2.36",
         "ext-json": "*"
     },
