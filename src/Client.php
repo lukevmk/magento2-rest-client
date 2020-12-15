@@ -634,7 +634,7 @@ class Client
     /**
      * Stores a product image from all store views
      *
-     * @param int $productId
+     * @param string $sku
      * @param int $position
      * @param bool $disabled
      * @param string $fileName
@@ -645,7 +645,7 @@ class Client
      * @throws GuzzleException
      */
     public function createProductImage(
-        int $productId,
+        string $sku,
         int $position,
         bool $disabled,
         string $fileName,
@@ -673,7 +673,7 @@ class Client
 
         return $this->request(
             'post',
-            $this->baseUrl . $this->allApiPrefix . 'products/' . $productId . '/media',
+            $this->baseUrl . $this->allApiPrefix . 'products/' . $sku . '/media',
             $parameters
         );
     }
