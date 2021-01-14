@@ -137,6 +137,21 @@ class Client
     }
 
     /**
+     * @param array $customer
+     * @return array
+     * @throws GuzzleException
+     * @throws \JsonException
+     */
+    public function updateCustomer(int $customerId, array $customer): array
+    {
+        return $this->request('put', $this->baseUrl . $this->apiPrefix . 'customers/' . $customerId, [
+            'json' => [
+                'customer' => $customer,
+            ],
+        ]);
+    }
+
+    /**
      * @param string $email
      * @return array
      * @throws GuzzleException
@@ -317,14 +332,14 @@ class Client
         return [
             'firstname' => $address['firstname'],
             'lastname' => $address['lastname'],
-            'company' => $address['company'],
+            'company' => $address['company'] ?? null,
             'postcode' => $address['postcode'],
             'email' => $customer['email'],
             'street' => $address['street'],
             'telephone' => $address['telephone'],
             'country_id' => $address['country_id'],
             'city' => $address['city'],
-            'region' => $address['region']['region'],
+            'region' => $address['region']['region'] ?? null,
             'region_code' => $address['region']['region_code'],
             'region_id' => $address['region']['region_id'],
         ];
