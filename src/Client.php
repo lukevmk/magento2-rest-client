@@ -152,6 +152,17 @@ class Client
     }
 
     /**
+     * @param int $customerId
+     * @return array
+     * @throws GuzzleException
+     * @throws \JsonException
+     */
+    public function deleteCustomer(int $customerId): array
+    {
+        return $this->request('delete', $this->baseUrl . $this->apiPrefix . 'customers/' . $customerId);
+    }
+
+    /**
      * @param string $email
      * @return array
      * @throws GuzzleException
