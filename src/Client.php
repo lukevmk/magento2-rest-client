@@ -736,4 +736,46 @@ class Client
             $this->baseUrl . $this->allApiPrefix . 'products/' . $sku . '/media/' . $mediaId
         );
     }
+
+    /**
+     * @return array
+     * @throws GuzzleException
+     * @throws \JsonException
+     */
+    public function getWebsites(): array
+    {
+        return $this->request(
+            'get',
+            $this->baseUrl . $this->allApiPrefix . 'store/websites'
+        );
+    }
+
+    /**
+     * @return array
+     * @throws GuzzleException
+     * @throws \JsonException
+     */
+    public function getStoreViews(): array
+    {
+        $storeViews = $this->request('get', $this->baseUrl.$this->allApiPrefix.'store/storeViews');
+
+        $storeViews = array_filter($storeViews, function($storeView) {
+            return $storeView['code'] !== 'admin';
+        });
+
+        return $storeViews;
+    }
+
+    /**
+     * @return array
+     * @throws GuzzleException
+     * @throws \JsonException
+     */
+    public function getStoreGroups(): array
+    {
+        return $this->request(
+            'get',
+            $this->baseUrl . $this->allApiPrefix . 'store/storeGroups'
+        );
+    }
 }
