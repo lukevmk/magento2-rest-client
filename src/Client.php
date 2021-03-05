@@ -759,7 +759,7 @@ class Client
     {
         $storeViews = $this->request('get', $this->baseUrl.$this->allApiPrefix.'store/storeViews');
 
-        $storeViews = array_filter($storeViews, function($storeView) {
+        $storeViews = array_filter($storeViews, function ($storeView) {
             return $storeView['code'] !== 'admin';
         });
 
