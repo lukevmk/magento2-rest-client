@@ -15,42 +15,42 @@ class Client
     /**
      * @var string
      */
-    private $baseUrl;
+    protected $baseUrl;
 
     /**
      * @var string
      */
-    private $username;
+    protected $username;
 
     /**
      * @var string
      */
-    private $password;
+    protected $password;
 
     /**
      * @var \GuzzleHttp\Client
      */
-    private $guzzle;
+    protected $guzzle;
 
     /**
      * @var string
      */
-    private $apiPrefix = '/rest/V1/';
+    protected $apiPrefix = '/rest/V1/';
 
     /**
      * @var string
      */
-    private $allApiPrefix = '/rest/all/V1/';
+    protected $allApiPrefix = '/rest/all/V1/';
 
     /**
      * @var Carbon|null
      */
-    private $authenticatedAt;
+    protected $authenticatedAt;
 
     /**
      * @var string
      */
-    private $accessToken;
+    protected $accessToken;
 
     /**
      * Client constructor.
@@ -329,7 +329,7 @@ class Client
     {
         return $this->request(
             'get',
-            $this->baseUrl . $this->apiPrefix . 'carts/' . $quoteId . '/payment-methods',
+            $this->baseUrl . $this->apiPrefix . 'carts/' . $quoteId . '/payment-methods'
         );
     }
 
@@ -451,7 +451,7 @@ class Client
     {
         return $this->request(
             'post',
-            $this->baseUrl . $this->apiPrefix . 'orders/' . $orderId . '/cancel',
+            $this->baseUrl . $this->apiPrefix . 'orders/' . $orderId . '/cancel'
         );
     }
 
@@ -508,7 +508,7 @@ class Client
         try {
             return $this->request(
                 'get',
-                $this->baseUrl . $this->apiPrefix . 'orders/' . $orderId,
+                $this->baseUrl . $this->apiPrefix . 'orders/' . $orderId
             );
         } catch (ClientException $exception) {
             if ($exception->getCode() === 404) {
