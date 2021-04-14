@@ -67,7 +67,7 @@ class Client
         $this->authenticate();
     }
 
-    private function authenticate(): void
+    protected function authenticate(): void
     {
         $isAuthenticated = $this->authenticatedAt instanceof Carbon && Carbon::now()->gt($this->authenticatedAt->addHours(4));
 
@@ -94,7 +94,7 @@ class Client
      * @return mixed
      * @throws \JsonException
      */
-    private function formatResponseData(ResponseInterface $response)
+    protected function formatResponseData(ResponseInterface $response)
     {
         return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
     }
@@ -107,7 +107,7 @@ class Client
      * @throws GuzzleException
      * @throws \JsonException
      */
-    private function request(string $method, string $url, array $options = [])
+    protected function request(string $method, string $url, array $options = [])
     {
         $auth = [
             'headers' => [
@@ -292,7 +292,7 @@ class Client
      * @return array
      * @throws BillingAddressNotFoundException
      */
-    private function findBillingAddress(array $customer): array
+    protected function findBillingAddress(array $customer): array
     {
         foreach ($customer['addresses'] as $address) {
             if (array_key_exists('default_billing', $address) && $address['default_billing'] === true) {
@@ -308,7 +308,7 @@ class Client
      * @return array|null
      * @throws ShippingAddressNotFoundException
      */
-    private function findShippingAddress(array $customer): ?array
+    protected function findShippingAddress(array $customer): ?array
     {
         foreach ($customer['addresses'] as $address) {
             if (array_key_exists('default_shipping', $address) && $address['default_shipping'] === true) {
@@ -338,7 +338,7 @@ class Client
      * @param array $address
      * @return array
      */
-    private function mapAddressFields(array $customer, array $address): array
+    protected function mapAddressFields(array $customer, array $address): array
     {
         return [
             'firstname' => $address['firstname'],
