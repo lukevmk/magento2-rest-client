@@ -15,42 +15,42 @@ class Client
     /**
      * @var string
      */
-    private $baseUrl;
+    protected $baseUrl;
 
     /**
      * @var string
      */
-    private $username;
+    protected $username;
 
     /**
      * @var string
      */
-    private $password;
+    protected $password;
 
     /**
      * @var \GuzzleHttp\Client
      */
-    private $guzzle;
+    protected $guzzle;
 
     /**
      * @var string
      */
-    private $apiPrefix = '/rest/V1/';
+    protected $apiPrefix = '/rest/V1/';
 
     /**
      * @var string
      */
-    private $allApiPrefix = '/rest/all/V1/';
+    protected $allApiPrefix = '/rest/all/V1/';
 
     /**
      * @var Carbon|null
      */
-    private $authenticatedAt;
+    protected $authenticatedAt;
 
     /**
      * @var string
      */
-    private $accessToken;
+    protected $accessToken;
 
     /**
      * Client constructor.
@@ -67,7 +67,7 @@ class Client
         $this->authenticate();
     }
 
-    private function authenticate(): void
+    protected function authenticate(): void
     {
         $isAuthenticated = $this->authenticatedAt instanceof Carbon && Carbon::now()->gt($this->authenticatedAt->addHours(4));
 
@@ -94,7 +94,7 @@ class Client
      * @return mixed
      * @throws \JsonException
      */
-    private function formatResponseData(ResponseInterface $response)
+    protected function formatResponseData(ResponseInterface $response)
     {
         return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
     }
@@ -107,7 +107,7 @@ class Client
      * @throws GuzzleException
      * @throws \JsonException
      */
-    private function request(string $method, string $url, array $options = [])
+    protected function request(string $method, string $url, array $options = [])
     {
         $auth = [
             'headers' => [
@@ -312,7 +312,7 @@ class Client
      * @return array
      * @throws BillingAddressNotFoundException
      */
-    private function findBillingAddress(array $customer): array
+    protected function findBillingAddress(array $customer): array
     {
         foreach ($customer['addresses'] as $address) {
             if (array_key_exists('default_billing', $address) && $address['default_billing'] === true) {
@@ -328,7 +328,7 @@ class Client
      * @return array|null
      * @throws ShippingAddressNotFoundException
      */
-    private function findShippingAddress(array $customer): ?array
+    protected function findShippingAddress(array $customer): ?array
     {
         foreach ($customer['addresses'] as $address) {
             if (array_key_exists('default_shipping', $address) && $address['default_shipping'] === true) {
@@ -349,7 +349,7 @@ class Client
     {
         return $this->request(
             'get',
-            $this->baseUrl . $this->apiPrefix . 'carts/' . $quoteId . '/payment-methods',
+            $this->baseUrl . $this->apiPrefix . 'carts/' . $quoteId . '/payment-methods'
         );
     }
 
@@ -358,7 +358,7 @@ class Client
      * @param array $address
      * @return array
      */
-    private function mapAddressFields(array $customer, array $address): array
+    protected function mapAddressFields(array $customer, array $address): array
     {
         return [
             'firstname' => $address['firstname'],
@@ -471,7 +471,7 @@ class Client
     {
         return $this->request(
             'post',
-            $this->baseUrl . $this->apiPrefix . 'orders/' . $orderId . '/cancel',
+            $this->baseUrl . $this->apiPrefix . 'orders/' . $orderId . '/cancel'
         );
     }
 
@@ -528,7 +528,7 @@ class Client
         try {
             return $this->request(
                 'get',
-                $this->baseUrl . $this->apiPrefix . 'orders/' . $orderId,
+                $this->baseUrl . $this->apiPrefix . 'orders/' . $orderId
             );
         } catch (ClientException $exception) {
             if ($exception->getCode() === 404) {
