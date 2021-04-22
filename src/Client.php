@@ -152,6 +152,26 @@ class Client
     }
 
     /**
+     * @param string $email
+     * @return array
+     * @throws GuzzleException
+     * @throws \JsonException
+     */
+    public function getCustomers(int $page = 1, int $pageSize = 25): array
+    {
+        $parameters = [
+            'searchCriteria' => [
+                'pageSize' => $pageSize,
+                'currentPage' => $page,
+            ],
+        ];
+
+        return $this->request('get', $this->baseUrl . $this->apiPrefix . 'customers/search', [
+            'query' => $parameters,
+        ]);
+    }
+
+    /**
      * @param int $customerId
      * @return array
      * @throws GuzzleException
