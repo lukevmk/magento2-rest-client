@@ -173,11 +173,11 @@ class Client
 
     /**
      * @param int $customerId
-     * @return array
+     * @return bool
      * @throws GuzzleException
      * @throws \JsonException
      */
-    public function deleteCustomer(int $customerId): array
+    public function deleteCustomer(int $customerId): bool
     {
         return $this->request('delete', $this->baseUrl . $this->apiPrefix . 'customers/' . $customerId);
     }
