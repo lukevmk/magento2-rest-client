@@ -152,17 +152,23 @@ class Client
     }
 
     /**
-     * @param string $email
+     * @param int $page
+     * @param int $pageSize
+     * @param array $filterGroups Like `[[filters => [[field => 'email', conditionType => 'eq' | 'like', value => '%@e.mail']]]]`
+     *     See https://magento.redoc.ly/2.3.7-admin/tag/customerssearch
+     *     and https://devdocs.magento.com/guides/v2.4/extension-dev-guide/searching-with-repositories.html#filter-group.
+     *     FilterGroups are joined AND, filters within FilterGroups are joined OR.
      * @return array
      * @throws GuzzleException
      * @throws \JsonException
      */
-    public function getCustomers(int $page = 1, int $pageSize = 25): array
+    public function getCustomers(int $page = 1, int $pageSize = 25, array $filterGroups = []): array
     {
         $parameters = [
             'searchCriteria' => [
                 'pageSize' => $pageSize,
                 'currentPage' => $page,
+                'filterGroups' => $filterGroups,
             ],
         ];
 
