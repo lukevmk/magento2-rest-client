@@ -86,7 +86,7 @@ class Client
         ]);
 
         $this->authenticatedAt = Carbon::now();
-        $this->accessToken = str_replace('"', '', $response->getBody()->getContents());
+        $this->accessToken = trim(str_replace('"', '', $response->getBody()->getContents()));
     }
 
     /**
