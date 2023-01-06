@@ -153,11 +153,11 @@ class Client
     
     /**
      * @param int $customerId
-     * @return bool
+     * @return array
      * @throws GuzzleException
      * @throws \JsonException
      */
-    public function getCustomer(int $customerId): bool
+    public function getCustomer(int $customerId): array
     {
         return $this->request('get', $this->baseUrl . $this->apiPrefix . 'customers/' . $customerId);
     }
