@@ -150,7 +150,29 @@ class Client
             ],
         ]);
     }
-
+    
+    /**
+     * @param int $customerId
+     * @return bool
+     * @throws GuzzleException
+     * @throws \JsonException
+     */
+    public function getCustomer(int $customerId): bool
+    {
+        return $this->request('get', $this->baseUrl . $this->apiPrefix . 'customers/' . $customerId);
+    }
+    
+    /**
+     * @param int $customerId
+     * @return bool
+     * @throws GuzzleException
+     * @throws \JsonException
+     */
+    public function deleteCustomer(int $customerId): bool
+    {
+        return $this->request('delete', $this->baseUrl . $this->apiPrefix . 'customers/' . $customerId);
+    }
+    
     /**
      * @param int $page
      * @param int $pageSize
@@ -175,17 +197,6 @@ class Client
         return $this->request('get', $this->baseUrl . $this->apiPrefix . 'customers/search', [
             'query' => $parameters,
         ]);
-    }
-
-    /**
-     * @param int $customerId
-     * @return bool
-     * @throws GuzzleException
-     * @throws \JsonException
-     */
-    public function deleteCustomer(int $customerId): bool
-    {
-        return $this->request('delete', $this->baseUrl . $this->apiPrefix . 'customers/' . $customerId);
     }
 
     /**
