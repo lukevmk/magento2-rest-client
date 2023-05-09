@@ -150,7 +150,7 @@ class Client
             ],
         ]);
     }
-    
+
     /**
      * @param int $customerId
      * @return array
@@ -161,7 +161,7 @@ class Client
     {
         return $this->request('get', $this->baseUrl . $this->apiPrefix . 'customers/' . $customerId);
     }
-    
+
     /**
      * @param int $customerId
      * @return bool
@@ -172,7 +172,7 @@ class Client
     {
         return $this->request('delete', $this->baseUrl . $this->apiPrefix . 'customers/' . $customerId);
     }
-    
+
     /**
      * @param int $page
      * @param int $pageSize
@@ -291,6 +291,8 @@ class Client
      * @param int $quoteId
      * @param string $methodCode
      * @param string $carrierCode
+     * @param array|null $shippingAddress {@see Client::mapAddressFields()}
+     * @param array|null $billingAddress {@see Client::mapAddressFields()}
      * @return mixed
      * @throws BillingAddressNotFoundException
      * @throws GuzzleException
@@ -301,10 +303,12 @@ class Client
         array $customer,
         int $quoteId,
         string $methodCode = 'flatrate',
-        string $carrierCode = 'flatrate'
+        string $carrierCode = 'flatrate',
+        ?array $shippingAddress = null,
+        ?array $billingAddress = null,
     ) {
-        $shippingAddress = $this->findShippingAddress($customer);
-        $billingAddress = $this->findBillingAddress($customer);
+        $shippingAddress ??= $this->findShippingAddress($customer);
+        $billingAddress ??= $this->findBillingAddress($customer);
 
         $data = [
             'addressInformation' => [
@@ -354,6 +358,32 @@ class Client
         }
 
         throw new ShippingAddressNotFoundException('Shipping address not found for customer');
+    }
+
+    /**
+     * @return array|null
+     * @throws GuzzleException
+     * @throws \JsonException
+     */
+    public function getCountries(): ?array
+    {
+        return $this->request(
+            'get',
+            $this->baseUrl . $this->apiPrefix . 'directory/countries'
+        );
+    }
+
+    /**
+     * @return array|null
+     * @throws GuzzleException
+     * @throws \JsonException
+     */
+    public function getCountry($countryId): ?array
+    {
+        return $this->request(
+            'get',
+            $this->baseUrl . $this->apiPrefix . 'directory/countries/' . $countryId
+        );
     }
 
     /**
