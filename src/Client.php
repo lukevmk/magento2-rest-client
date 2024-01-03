@@ -252,7 +252,7 @@ class Client
      */
     public function addProductToCart(int $quoteId, string $sku, int $quantity)
     {
-        return $this->request('post', $this->baseUrl . $this->apiPrefix . 'carts/mine/items', [
+        return $this->request('post', $this->baseUrl . $this->apiPrefix . 'carts/' . $quoteId . '/items', [
             'json' => [
                 'cartItem' => [
                     'sku' => $sku,
